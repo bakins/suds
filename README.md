@@ -65,8 +65,30 @@ Any targets that do not end with ".nodes" or is not found is just not included i
 
 Note: XXX should the target have a flag as to whether it is a node and just use the base name for it.  We can not include it when not found, etc.  Or perhaps do the opposite - if the target does not include a "." then assume it is a node?
 
+TODO: support RFC style (_service _protocol lookups)
 
 The key we are setting in etcd is arbitrary (ie, 2, 3) but should be unique for the service - perhaps use the node name.  Also, you may want to include a ttl and have something ping it to ensure only "live" nodes are included.
+
+
+For "legacy" applications that do not support using SRV, a roundrobin of nodes is returned:
+
+`dig @127.0.0.1 -p 15353 www.services.suds.local`
+
+```
+...
+;; ANSWER SECTION:
+www.services.suds.local. 0	IN	A	10.10.1.3
+www.services.suds.local. 0	IN	A	10.10.1.1
+...
+```
+
+Aknowledgements:
+
+DNS interfaced inspired by https://www.consul.io
+
+Huge thanks to http://github.com/miekg/dns
+
+
 
 
 
